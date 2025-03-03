@@ -105,12 +105,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function loadQuestions() {
     questionContainer.innerHTML = "";
     let blockEnd = Math.min(currentQuestionIndex + blockSize, questions.length);
-
     for (let i = currentQuestionIndex; i < blockEnd; i++) {
       const q = questions[i];
       const questionDiv = document.createElement("div");
       questionDiv.innerHTML = `<p><strong>${q.question}</strong></p>`;
-
       q.options.forEach(option => {
         const button = document.createElement("button");
         button.textContent = option;
