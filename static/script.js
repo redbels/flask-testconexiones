@@ -75,62 +75,32 @@ document.addEventListener("DOMContentLoaded", function () {
         "No, siempre fue claro/a.",
         "A veces sí, pero en general nos llevamos bien.",
         "Sí, me da señales mixtas todo el tiempo."
+    ]},
+
+    // 🔹 BLOQUE 4: Actitud y Coherencia
+    { question: "📌 BLOQUE 4: Actitud y Coherencia\n1️⃣3️⃣ 🎭 ¿Sus palabras y acciones coinciden?", options: [
+        "Sí, lo que dice y lo que hace están alineados.",
+        "A veces, pero noto contradicciones.",
+        "No, dice una cosa y hace otra."
+    ]},
+    { question: "1️⃣4️⃣ 🔄 ¿Siente celos o te ha hecho comentarios sobre otras personas con las que salís?", options: [
+        "No, respeta mi vida personal.",
+        "A veces muestra interés o curiosidad.",
+        "Sí, pero después desaparece como si nada."
+    ]},
+
+    // 🔹 BLOQUE 5: Dinámica General
+    { question: "📌 BLOQUE 5: Dinámica General\n1️⃣9️⃣ 🎢 ¿Te sentiste seguro/a con esta relación o es una montaña rusa emocional?", options: [
+        "Me siento seguro/a, hay estabilidad.",
+        "A veces bien, a veces mal, no es claro.",
+        "Siento que me genera ansiedad constante."
+    ]},
+    { question: "2️⃣0️⃣ 🚪 Si te alejás, ¿cómo reacciona?", options: [
+        "Muestra interés y busca saber qué pasa.",
+        "A veces lo nota, a veces no.",
+        "No se da cuenta o le da lo mismo."
     ]}
   ];
-
-  function loadQuestions() {
-    questionContainer.innerHTML = "";
-    let blockEnd = Math.min(currentQuestionIndex + blockSize, questions.length);
-
-    for (let i = currentQuestionIndex; i < blockEnd; i++) {
-      const q = questions[i];
-      const questionDiv = document.createElement("div");
-
-      // 🔹 Si hay título de bloque, mostrarlo
-      if (q.question.includes("\n")) {
-        const parts = q.question.split("\n");
-        const blockTitle = document.createElement("h3");
-        blockTitle.textContent = parts[0];
-        questionDiv.appendChild(blockTitle);
-        questionDiv.appendChild(document.createElement("br"));
-        const questionText = document.createElement("p");
-        questionText.textContent = parts[1];
-        questionDiv.appendChild(questionText);
-      } else {
-        questionDiv.innerHTML = `<p><strong>${q.question}</strong></p>`;
-      }
-
-      q.options.forEach(option => {
-        const button = document.createElement("button");
-        button.textContent = option;
-        button.classList.add("option-button");
-
-        // 🔹 Verifica si la respuesta ya fue seleccionada antes y márcala
-        if (answers[i] === option) {
-          button.classList.add("selected");
-        }
-
-        button.onclick = function () {
-          answers[i] = option;
-
-          // 🔹 Quitar la clase "selected" de todos los botones del bloque de la pregunta
-          questionDiv.querySelectorAll(".option-button").forEach(btn => btn.classList.remove("selected"));
-
-          // 🔹 Agregar la clase "selected" al botón clickeado
-          button.classList.add("selected");
-
-          // 🔹 Habilitar el botón "Siguiente" solo si se respondieron todas las preguntas del bloque
-          if (isBlockAnswered()) {
-            nextButton.disabled = false;
-          }
-        };
-        questionDiv.appendChild(button);
-      });
-
-      questionContainer.appendChild(questionDiv);
-    }
-    nextButton.disabled = true;
-  }
 
   function isBlockAnswered() {
     for (let i = currentQuestionIndex; i < Math.min(currentQuestionIndex + blockSize, questions.length); i++) {
@@ -146,14 +116,12 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Debes seleccionar una opción en cada pregunta del bloque antes de continuar.");
       return;
     }
-
-    currentQuestionIndex += blockSize; // 🔹 Avanzar de a 2 preguntas
-
+    currentQuestionIndex += blockSize;
     if (currentQuestionIndex >= questions.length) {
       localStorage.setItem("respuestasTest", JSON.stringify(answers));
       window.location.href = "/resultados";
     } else {
-      loadQuestions(); // 🔹 Cargar el siguiente bloque de preguntas
+      loadQuestions();
     }
   });
 
@@ -162,4 +130,28 @@ document.addEventListener("DOMContentLoaded", function () {
     testContainer.style.display = "block";
     loadQuestions();
   });
+
+  function loadQuestions() {
+    questionContainer.innerHTML = "";
+    let blockEnd = Math.min(currentQuestionIndex + blockSize, questions.length);
+    for (let i = currentQuestionIndex; i < blockEnd; i++) {
+      const q = questions[i];
+      const questionDiv = document.createElement("div");
+      questionDiv.innerHTML = `<p><strong>${q.question}</strong></p>`;
+      q.options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.classList.add("option-button");
+        button.onclick = () => {
+          answers[i] = option;
+          questionDiv.querySelectorAll(".option-button").forEach(btn => btn.classList.remove("selected"));
+          button.classList.add("selected");
+          if (isBlockAnswered()) nextButton.disabled = false;
+        };
+        questionDiv.appendChild(button);
+      });
+      questionContainer.appendChild(questionDiv);
+    }
+    nextButton.disabled = true;
+  }
 });
