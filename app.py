@@ -1,8 +1,7 @@
 from flask import Flask, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", template_folder="templates")
 
-# Rutas para las páginas HTML
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -19,6 +18,5 @@ def como_esta_armado():
 def conocer_mas():
     return render_template("conocer-mas.html")
 
-# Iniciar la app en producción
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=10000)
