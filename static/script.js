@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "A veces sí, a veces no.",
         "No, siempre tengo que escribir primero."
     ]},
-
     { question: "3️⃣ ⌛ ¿Cuánto tarda en responderte?", options: [
         "Responde rápido y con interés.",
         "A veces responde al instante, a veces tarda horas o días.",
@@ -45,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "Responde normal, sin mucho interés.",
         "Evita la conversación o cambia de tema."
     ]},
-
     { question: "7️⃣ 🗓️ ¿Cómo son sus planes con vos?", options: [
         "Los organiza con tiempo y los cumple.",
         "Los propone, pero a veces los cancelan.",
@@ -68,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "A veces, pero hay momentos en que se distancia.",
         "No, siento que soy un pasatiempo más."
     ]},
-
     { question: "1️⃣1️⃣ 🤔 ¿Alguna vez te dijo que no está seguro de lo que siente por vos?", options: [
         "No, siempre fue claro/a conmigo.",
         "Fue muy ambiguo.",
@@ -91,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "A veces muestra interés o curiosidad.",
         "Sí, pero después desaparece como si nada."
     ]},
-
     { question: "1️⃣5️⃣ 🏡 ¿Alguna vez lo notaste incómodo/a cuando se habla de relaciones o compromiso?", options: [
         "No, habla del tema sin problemas.",
         "A veces parece incómodo.",
@@ -114,7 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "Sí, siento que está más frío/a ahora.",
         "Sí, al principio era atento/a y ahora apenas responde."
     ]},
-
     { question: "1️⃣9️⃣ 🎢 ¿Te sentiste seguro/a con esta relación o es una montaña rusa emocional?", options: [
         "Me siento seguro/a, hay estabilidad.",
         "A veces bien, a veces mal, no es claro.",
@@ -130,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function loadQuestions() {
     questionContainer.innerHTML = "";
     let blockEnd = Math.min(currentQuestionIndex + blockSize, questions.length);
-
     for (let i = currentQuestionIndex; i < blockEnd; i++) {
       const q = questions[i];
       const questionDiv = document.createElement("div");
@@ -141,7 +135,9 @@ document.addEventListener("DOMContentLoaded", function () {
         button.classList.add("option-button");
         button.onclick = () => {
           answers[i] = option;
-          if (Object.keys(answers).length % 2 === 0) nextButton.disabled = false;
+          questionDiv.querySelectorAll(".option-button").forEach(btn => btn.classList.remove("selected"));
+          button.classList.add("selected");
+          if (isBlockAnswered()) nextButton.disabled = false;
         };
         questionDiv.appendChild(button);
       });
@@ -166,3 +162,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
