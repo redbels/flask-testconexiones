@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Resultado - Test de Conexiones</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>¡Acá tenés tu diagnóstico! 🔥</h1>
+    <!-- Contenedor para mostrar los resultados dinámicamente -->
+    <div id="result-container"></div>
+
+    <!-- CTA - Compartir y otras opciones -->
+    <div class="cta-buttons">
+      <!-- Botón para compartir vía WhatsApp -->
+      <button id="share" onclick="shareResult()">Compartir 📲</button>
+      <!-- Botón para hablar con un profesional, iniciando con el emoji del cerebro -->
+      <button id="consult" onclick="location.href='psicologos.html'">🧠 Reflexioná más (Habla con un profesional)</button>
+    </div>
+    
+    <p class="signature">Creado por @RedBels</p>
+    <p class="signature"><a href="conocer-mas.html">CONOCER MAS</a></p>
+  </div>
+
+  <script src="resultados.js"></script>
+  <script>
+    function shareResult() {
+      const message = encodeURIComponent("Hace el test y compartamos traumas jaja. Mira este test: " + window.location.href);
+      window.open("https://api.whatsapp.com/send?text=" + message, "_blank");
+    }
+  </script>
+</body>
+</html>
