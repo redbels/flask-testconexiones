@@ -146,12 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
     nextButton.disabled = true;
   }
 
-  startButton.addEventListener("click", () => {
-    introContainer.style.display = "none";
-    testContainer.style.display = "block";
-    loadQuestions();
-  });
-
   nextButton.addEventListener("click", () => {
     currentQuestionIndex += blockSize;
     if (currentQuestionIndex >= questions.length) {
@@ -161,5 +155,10 @@ document.addEventListener("DOMContentLoaded", function () {
       loadQuestions();
     }
   });
-});
 
+  startButton.addEventListener("click", () => {
+    introContainer.style.display = "none";
+    testContainer.style.display = "block";
+    loadQuestions();
+  });
+});
