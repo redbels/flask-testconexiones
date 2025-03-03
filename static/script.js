@@ -88,29 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "A veces muestra interés o curiosidad.",
         "Sí, pero después desaparece como si nada."
     ]},
-    { question: "1️⃣5️⃣ 🏡 ¿Alguna vez lo notaste incómodo/a cuando se habla de relaciones o compromiso?", options: [
-        "No, habla del tema sin problemas.",
-        "A veces parece incómodo.",
-        "Sí, evita el tema o se pone a la defensiva."
-    ]},
-    { question: "1️⃣6️⃣ 💬 ¿Hablaron sobre qué buscan en una relación?", options: [
-        "Sí, y estamos en la misma página.",
-        "Sí, pero no sé si estamos alineados.",
-        "No, nunca lo hablamos."
-    ]},
 
     // 🔹 BLOQUE 5: Dinámica General
-    { question: "📌 BLOQUE 5: Dinámica General\n1️⃣7️⃣ 👀 ¿Cómo actúa cuando le hablás de lo que necesitás en la relación?", options: [
-        "Me escucha y busca entenderme.",
-        "Me escucha, pero no veo cambios.",
-        "Si lo toma mal o lo evita."
-    ]},
-    { question: "1️⃣8️⃣ 📉 ¿Sientes que su nivel de interés cambió con el tiempo?", options: [
-        "No, sigue igual o incluso más interesado/a.",
-        "Sí, siento que está más frío/a ahora.",
-        "Sí, al principio era atento/a y ahora apenas responde."
-    ]},
-    { question: "1️⃣9️⃣ 🎢 ¿Te sentiste seguro/a con esta relación o es una montaña rusa emocional?", options: [
+    { question: "📌 BLOQUE 5: Dinámica General\n1️⃣9️⃣ 🎢 ¿Te sentiste seguro/a con esta relación o es una montaña rusa emocional?", options: [
         "Me siento seguro/a, hay estabilidad.",
         "A veces bien, a veces mal, no es claro.",
         "Siento que me genera ansiedad constante."
@@ -125,10 +105,12 @@ document.addEventListener("DOMContentLoaded", function () {
   function loadQuestions() {
     questionContainer.innerHTML = "";
     let blockEnd = Math.min(currentQuestionIndex + blockSize, questions.length);
+
     for (let i = currentQuestionIndex; i < blockEnd; i++) {
       const q = questions[i];
       const questionDiv = document.createElement("div");
       questionDiv.innerHTML = `<p><strong>${q.question}</strong></p>`;
+
       q.options.forEach(option => {
         const button = document.createElement("button");
         button.textContent = option;
