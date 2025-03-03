@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Mapeo de puntuación para las 20 preguntas
   // La pregunta 1 tiene 4 opciones y las preguntas 2 a 20 tienen 3 opciones.
-  // Se ajusta la opción "peor" en las preguntas 2 a 20 para que valga 0.
+  // Se asignan los valores de acuerdo a la tabla revisada:
+  // En cada pregunta la opción más positiva vale 3, la intermedia 2, y la menos positiva 0.
   const scoreMapping = {
     // Pregunta 1 (4 opciones)
     "Todos los días con interés.": 3, 
