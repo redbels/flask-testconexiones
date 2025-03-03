@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let currentQuestionIndex = 0;
   let answers = {};
-  const blockSize = 2; // 🔹 Número de preguntas por bloque
+  const blockSize = 2; // 🔹 Mostrará 2 preguntas por bloque
 
   const questions = [
     // 🔹 BLOQUE 1: Comunicación y Contacto
@@ -22,94 +22,147 @@ document.addEventListener("DOMContentLoaded", function () {
         "A veces sí, a veces no.",
         "No, siempre tengo que escribir primero."
     ]},
+
+    { question: "3️⃣ ⌛ ¿Cuánto tarda en responderte?", options: [
+        "Responde rápido y con interés.",
+        "A veces responde al instante, a veces tarda horas o días.",
+        "Siempre deja los mensajes en visto por horas/días sin motivo."
+    ]},
+    { question: "4️⃣ 📵 ¿Alguna vez dejó de responder sin explicación y después apareció como si nada?", options: [
+        "Nunca, siempre mantiene el contacto.",
+        "Alguna vez, pero lo hablamos.",
+        "Sí, varias veces, y cuando vuelve actúa como si nada."
+    ]},
+
     // 🔹 BLOQUE 2: Interés y Esfuerzo
-    { question: "📌 BLOQUE 2: Interés y Esfuerzo\n3️⃣ 🏃‍♂️ ¿Hace planes para verte?", options: [
+    { question: "📌 BLOQUE 2: Interés y Esfuerzo\n5️⃣ 🏃‍♂️ ¿Hace planes para verte?", options: [
         "Sí, se planifica y los propone.",
         "A veces, pero no con tanta iniciativa.",
         "No, siempre los propongo yo."
     ]},
-    { question: "4️⃣ 📍 ¿Cómo son sus respuestas cuando hablás acerca de tu vida?", options: [
+    { question: "6️⃣ 📍 ¿Cómo son sus respuestas cuando hablás acerca de tu vida?", options: [
         "Se muestra interesado.",
         "Responde normal, sin mucho interés.",
         "Evita la conversación o cambia de tema."
     ]},
-    // 🔹 (Continúa con más preguntas...)
+
+    { question: "7️⃣ 🗓️ ¿Cómo son sus planes con vos?", options: [
+        "Los organiza con tiempo y los cumple.",
+        "Los propone, pero a veces los cancelan.",
+        "Siempre son improvisados, nunca se compromete a nada."
+    ]},
+    { question: "8️⃣ 😌 ¿Sentís que te da prioridad en tu vida?", options: [
+        "Sí, claramente.",
+        "No lo tengo claro, a veces sí a veces no.",
+        "No, siempre soy su último plan."
+    ]},
+
+    // 🔹 BLOQUE 3: Conexión Emocional
+    { question: "📌 BLOQUE 3: Conexión Emocional\n9️⃣ ❤️ ¿Hablan de cosas personales y profundas?", options: [
+        "Sí, me cuenta cosas importantes de su vida.",
+        "A veces, pero no demasiado.",
+        "No, evita esos temas o cambia la conversación."
+    ]},
+    { question: "🔟 😏 ¿Te hace sentir especial cuando están juntos?", options: [
+        "Sí, me presta atención real.",
+        "A veces, pero hay momentos en que se distancia.",
+        "No, siento que soy un pasatiempo más."
+    ]},
+
+    { question: "1️⃣1️⃣ 🤔 ¿Alguna vez te dijo que no está seguro de lo que siente por vos?", options: [
+        "No, siempre fue claro/a conmigo.",
+        "Fue muy ambiguo.",
+        "Sí, varias veces."
+    ]},
+    { question: "1️⃣2️⃣ 💭 ¿Alguna vez te dio señales confusas sobre lo que quiere con vos?", options: [
+        "No, siempre fue claro/a.",
+        "A veces sí, pero en general nos llevamos bien.",
+        "Sí, me da señales mixtas todo el tiempo."
+    ]},
+
+    // 🔹 BLOQUE 4: Actitud y Coherencia
+    { question: "📌 BLOQUE 4: Actitud y Coherencia\n1️⃣3️⃣ 🎭 ¿Sus palabras y acciones coinciden?", options: [
+        "Sí, lo que dice y lo que hace están alineados.",
+        "A veces, pero noto contradicciones.",
+        "No, dice una cosa y hace otra."
+    ]},
+    { question: "1️⃣4️⃣ 🔄 ¿Siente celos o te ha hecho comentarios sobre otras personas con las que salís?", options: [
+        "No, respeta mi vida personal.",
+        "A veces muestra interés o curiosidad.",
+        "Sí, pero después desaparece como si nada."
+    ]},
+
+    { question: "1️⃣5️⃣ 🏡 ¿Alguna vez lo notaste incómodo/a cuando se habla de relaciones o compromiso?", options: [
+        "No, habla del tema sin problemas.",
+        "A veces parece incómodo.",
+        "Sí, evita el tema o se pone a la defensiva."
+    ]},
+    { question: "1️⃣6️⃣ 💬 ¿Hablaron sobre qué buscan en una relación?", options: [
+        "Sí, y estamos en la misma página.",
+        "Sí, pero no sé si estamos alineados.",
+        "No, nunca lo hablamos."
+    ]},
+
+    // 🔹 BLOQUE 5: Dinámica General
+    { question: "📌 BLOQUE 5: Dinámica General\n1️⃣7️⃣ 👀 ¿Cómo actúa cuando le hablás de lo que necesitás en la relación?", options: [
+        "Me escucha y busca entenderme.",
+        "Me escucha, pero no veo cambios.",
+        "Si lo toma mal o lo evita."
+    ]},
+    { question: "1️⃣8️⃣ 📉 ¿Sientes que su nivel de interés cambió con el tiempo?", options: [
+        "No, sigue igual o incluso más interesado/a.",
+        "Sí, siento que está más frío/a ahora.",
+        "Sí, al principio era atento/a y ahora apenas responde."
+    ]},
+
+    { question: "1️⃣9️⃣ 🎢 ¿Te sentiste seguro/a con esta relación o es una montaña rusa emocional?", options: [
+        "Me siento seguro/a, hay estabilidad.",
+        "A veces bien, a veces mal, no es claro.",
+        "Siento que me genera ansiedad constante."
+    ]},
+    { question: "2️⃣0️⃣ 🚪 Si te alejás, ¿cómo reacciona?", options: [
+        "Muestra interés y busca saber qué pasa.",
+        "A veces lo nota, a veces no.",
+        "No se da cuenta o le da lo mismo."
+    ]}
   ];
 
   function loadQuestions() {
-    questionContainer.innerHTML = ""; // Limpia el contenedor
-
+    questionContainer.innerHTML = "";
     let blockEnd = Math.min(currentQuestionIndex + blockSize, questions.length);
+
     for (let i = currentQuestionIndex; i < blockEnd; i++) {
       const q = questions[i];
       const questionDiv = document.createElement("div");
-
-      // 🔹 Si la pregunta incluye un título de bloque, separarlo visualmente
-      if (q.question.includes("\n")) {
-        const parts = q.question.split("\n");
-        const blockTitle = document.createElement("h3");
-        blockTitle.textContent = parts[0];
-        questionDiv.appendChild(blockTitle);
-        questionDiv.appendChild(document.createElement("br"));
-        const questionText = document.createElement("p");
-        questionText.textContent = parts[1];
-        questionDiv.appendChild(questionText);
-      } else {
-        questionDiv.innerHTML = `<p><strong>${q.question}</strong></p>`;
-      }
-
+      questionDiv.innerHTML = `<p><strong>${q.question}</strong></p>`;
       q.options.forEach(option => {
         const button = document.createElement("button");
         button.textContent = option;
         button.classList.add("option-button");
-        button.onclick = function () {
-          saveAnswer(i, option);
-          questionDiv.querySelectorAll(".option-button").forEach(btn => btn.classList.remove("selected"));
-          this.classList.add("selected");
-          if (isBlockAnswered()) {
-            nextButton.disabled = false;
-          }
+        button.onclick = () => {
+          answers[i] = option;
+          if (Object.keys(answers).length % 2 === 0) nextButton.disabled = false;
         };
         questionDiv.appendChild(button);
       });
-
       questionContainer.appendChild(questionDiv);
     }
     nextButton.disabled = true;
   }
 
-  function saveAnswer(index, answer) {
-    answers[index] = answer;
-  }
-
-  function isBlockAnswered() {
-    for (let i = currentQuestionIndex; i < Math.min(currentQuestionIndex + blockSize, questions.length); i++) {
-      if (!(i in answers)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  nextButton.addEventListener("click", function () {
-    if (!isBlockAnswered()) {
-      alert("Debes seleccionar una opción en cada pregunta del bloque antes de continuar.");
-      return;
-    }
-
-    currentQuestionIndex += blockSize; // 🔹 Avanza al siguiente bloque de preguntas
-
-    if (currentQuestionIndex >= questions.length) {
-      localStorage.setItem("respuestasTest", JSON.stringify(answers));
-      window.location.href = "/resultados";  // 🔥 Redirigir a la página de resultados
-    } else {
-      loadQuestions(); // 🔹 Cargar el siguiente conjunto de preguntas
-    }
-  });
-
-  startButton.addEventListener("click", function () {
+  startButton.addEventListener("click", () => {
     introContainer.style.display = "none";
     testContainer.style.display = "block";
     loadQuestions();
+  });
+
+  nextButton.addEventListener("click", () => {
+    currentQuestionIndex += blockSize;
+    if (currentQuestionIndex >= questions.length) {
+      localStorage.setItem("respuestasTest", JSON.stringify(answers));
+      window.location.href = "/resultados";
+    } else {
+      loadQuestions();
+    }
   });
 });
