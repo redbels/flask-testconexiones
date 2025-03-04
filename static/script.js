@@ -1,5 +1,68 @@
 document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
+  console.log("✅ DOM completamente cargado.");
+
   const startButton = document.getElementById("start-button");
+
+  if (startButton) {
+    console.log("✅ Botón encontrado:", startButton);
+    startButton.addEventListener("click", function () {
+      console.log("🟢 Botón clickeado, iniciando el test...");
+      introContainer.style.display = "none";
+      testContainer.style.display = "block";
+      loadQuestions();
+    });
+  } else {
+    console.error("❌ ERROR: El botón de inicio NO fue encontrado en el DOM.");
+  }
+
+  const nextButton = document.getElementById("next-button");
+  const questionContainer = document.getElementById("question-container");
+
+  let currentQuestionIndex = 0;
+  let answers = {}; 
+  const blockSize = 2;
+
+  function loadQuestions() {
+    questionContainer.innerHTML = "";
+    let blockEnd = Math.min(currentQuestionIndex + blockSize, questions.length);
+    for (let i = currentQuestionIndex; i < blockEnd; i++) {
+      const q = questions[i];
+      const questionDiv = document.createElement("div");
+      questionDiv.innerHTML = `<p><strong>${q.question}</strong></p>`;
+      q.options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.classList.add("option-button");
+        button.onclick = () => {
+          answers[i] = option;
+          questionDiv.querySelectorAll(".option-button").forEach(btn => btn.classList.remove("selected"));
+          button.classList.add("selected");
+          nextButton.disabled = false;
+        };
+        questionDiv.appendChild(button);
+      });
+      questionContainer.appendChild(questionDiv);
+    }
+    nextButton.disabled = true;
+  }
+
+  nextButton.addEventListener("click", function () {
+    if (!answers[currentQuestionIndex] || !answers[currentQuestionIndex + 1]) {
+      alert("Debes seleccionar una opción en cada pregunta del bloque antes de continuar.");
+      return;
+    }
+
+    currentQuestionIndex += blockSize;
+
+    if (currentQuestionIndex >= questions.length) {
+      localStorage.setItem("respuestasTest", JSON.stringify(answers));
+      window.location.href = "/resultados";
+    } else {
+      loadQuestions();
+    }
+  });
+});
   const introContainer = document.getElementById("intro-container");
   const testContainer = document.getElementById("test-container");
   const nextButton = document.getElementById("next-button");
