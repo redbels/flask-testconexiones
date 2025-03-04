@@ -10,12 +10,32 @@
   <div class="container">
     <h1>Resultados del Test</h1>
 
-    <!-- Contenedor donde se mostrarán los resultados -->
-    <div id="result-container">
-      <p>Cargando resultados...</p>
+    <!-- 📌 Estructura corregida para que `resultados.js` pueda cargar los datos -->
+    <div class="result-container">
+      <h2 id="titulo-resultado"></h2>
+
+      <div class="result-box">
+        <h3>Traducción más directa 💥</h3>
+        <p id="traduccion"></p>
+      </div>
+
+      <div class="result-box">
+        <h3>Análisis de la situación 🔍</h3>
+        <p id="analisis"></p>
+      </div>
+
+      <div class="result-box">
+        <h3>Qué podés hacer ahora ✅</h3>
+        <ul id="acciones"></ul>
+      </div>
+
+      <div class="result-box">
+        <h3>¿Qué significa esto a largo plazo? 🔮</h3>
+        <p id="futuro"></p>
+      </div>
     </div>
 
-    <!-- Botón para reiniciar el test -->
+    <!-- 📌 Botón para reiniciar el test -->
     <button id="restart-button">🔄 Volver a hacer el test</button>
   </div>
 
