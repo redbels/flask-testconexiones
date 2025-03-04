@@ -42,6 +42,7 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Estilos para los botones generales */
 button {
   display: block;
   width: 80%;
@@ -66,9 +67,22 @@ button.selected {
   color: white;
 }
 
+/* Botón "SIGUIENTE" modificado: fondo gris claro */
 #next-button {
   display: block;
   margin: 20px auto;
+  background: #d3d3d3;  /* Gris claro */
+  color: #000;          /* Texto en negro para buen contraste */
+  border: none;
+  padding: 10px 20px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+#next-button:hover {
+  background: #c0c0c0;  /* Un gris un poco más oscuro al pasar el mouse */
 }
 
 #result-container {
@@ -116,3 +130,4 @@ button.selected {
 #footer-links a:hover {
   text-decoration: underline;
 }
+
