@@ -1,5 +1,41 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const storedAnswers = JSON.parse(localStorage.getItem("respuestasTest"));
+  document.addEventListener("DOMContentLoaded", function () {
+    let storedAnswers = JSON.parse(localStorage.getItem("respuestasTest"));
+    
+    console.log("Respuestas crudas almacenadas:", storedAnswers);
+
+    // Verificar si storedAnswers es un objeto en lugar de un array
+    if (!Array.isArray(storedAnswers)) {
+        storedAnswers = Object.values(storedAnswers);
+        console.log("Respuestas convertidas en array:", storedAnswers);
+    }
+
+    if (!storedAnswers || storedAnswers.length !== 20) {
+        console.error("Error: El número de respuestas es incorrecto.");
+        return;
+    }
+
+    const score = calculateScore(storedAnswers);
+    console.log("Puntaje final:", score);
+
+    const diagnosis = getDiagnosis(score);
+    console.log("Diagnóstico seleccionado:", diagnosis);
+
+    // Mostrar el diagnóstico en la página
+    const resultContainer = document.getElementById("result-container");
+    if (resultContainer) {
+        resultContainer.innerHTML = `
+            <h2>${diagnosis.title}</h2>
+            <p><strong>Traducción más directa:</strong> ${diagnosis.translation}</p>
+            <p><strong>Análisis basado en el diagnóstico:</strong> ${diagnosis.analysis}</p>
+            <p><strong>Detectado patrón en tus respuestas:</strong><br>${diagnosis.detected.replace(/\n/g, "<br>")}</p>
+            <p><strong>Qué podés hacer ahora:</strong></p>
+            <ul>${diagnosis.actions.map(action => `<li>${action}</li>`).join("")}</ul>
+            <p><strong>¿Qué significa esto a largo plazo?:</strong> ${diagnosis.future}</p>
+        `;
+    }
+});
+
   const resultContainer = document.getElementById("result-container");
 
   if (!storedAnswers) {
