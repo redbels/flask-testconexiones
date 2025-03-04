@@ -1,6 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("DOMContentLoaded", function () {
-    let storedAnswers = JSON.parse(localStorage.getItem("respuestasTest"));
+   let storedAnswers = localStorage.getItem("respuestasTest");
+
+if (!storedAnswers) {
+    console.error("No hay respuestas almacenadas en localStorage.");
+    return;
+}
+
+storedAnswers = JSON.parse(storedAnswers);
+console.log("Respuestas crudas almacenadas:", storedAnswers);
+
+// Convertir el objeto a un array si es necesario
+storedAnswers = Object.values(storedAnswers);
+console.log("Respuestas convertidas en array:", storedAnswers);
+
+if (storedAnswers.length !== 20) {
+    console.error("Error: Número incorrecto de respuestas.");
+    return;
+}
     
     console.log("Respuestas crudas almacenadas:", storedAnswers);
 
