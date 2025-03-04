@@ -110,7 +110,7 @@ button.selected {
   margin-top: 10px;
 }
 
-/* Estilos para el footer con los links en la esquina inferior izquierda */
+/* Estilos para el footer con los links en la esquina inferior izquierda para pantallas grandes */
 #footer-links {
   position: fixed;
   bottom: 20px;
@@ -130,4 +130,14 @@ button.selected {
 #footer-links a:hover {
   text-decoration: underline;
 }
+
+/* Para pantallas móviles: los links se muestran al final del contenido */
+@media (max-width: 600px) {
+  #footer-links {
+    position: static;
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+
 
