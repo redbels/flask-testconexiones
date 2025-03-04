@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tu Resultado - Test de Conexiones</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-<script src="{{ url_for('static', filename='resultados.js') }}" defer></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="{{ url_for('static', filename='resultados.js') }}" defer></script>
 </head>
 <body>
   <div class="container">
@@ -17,16 +17,21 @@
     <div class="cta-buttons">
       <!-- Botón para compartir vía WhatsApp -->
       <button id="share" onclick="shareResult()">Compartir 📲</button>
-      <!-- Botón para hablar con un profesional, iniciando con el emoji del cerebro -->
-<button id="consult" onclick="location.href='https://forms.gle/1KtxA9grWTBwDZ1t7'">
-  🧠 Reflexioná más (Habla con un profesional)
-</button>
+      <!-- Botón para hablar con un profesional -->
+      <button id="consult" onclick="location.href='https://forms.gle/1KtxA9grWTBwDZ1t7'">
+        🧠 Reflexioná más (Habla con un profesional)
+      </button>
     </div>
     
     <p class="signature">Creado por @RedBels</p>
   </div>
 
-  <script src="resultados.js"></script>
+  <!-- Footer con los links en la esquina inferior izquierda -->
+  <div id="footer-links">
+    <a href="{{ url_for('como_esta_armado') }}">💡 ¿Cómo funciona este Test?</a>
+    <a href="{{ url_for('conocer_mas') }}">🔍 Conocer Más</a>
+  </div>
+
   <script>
     function shareResult() {
       const message = encodeURIComponent("Hace el test y compartamos traumas jaja. Mira este test: " + window.location.href);
@@ -35,3 +40,4 @@
   </script>
 </body>
 </html>
+
