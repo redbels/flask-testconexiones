@@ -113,6 +113,13 @@ document.addEventListener("DOMContentLoaded", function () {
     ]}
   ];
 
+  // 🔹 SE RESTAURA LA FUNCIÓN QUE HACE QUE EL BOTÓN FUNCIONE
+  startButton.addEventListener("click", function () {
+    introContainer.style.display = "none";
+    testContainer.style.display = "block";
+    loadQuestions();
+  });
+
   nextButton.addEventListener("click", function () {
     if (!isBlockAnswered()) {
       alert("Debes seleccionar una opción en cada pregunta del bloque antes de continuar.");
