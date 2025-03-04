@@ -117,17 +117,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   ];
 
-  function calculateScore(answers) {
+ function calculateScore(answers) {
     let total = 0;
-    for (let i = 0; i < scoreMapping.length; i++) {
-      const answer = answers[i];
-      const mapping = scoreMapping[i];
-      if (mapping[answer] !== undefined) {
-        total += mapping[answer];
-      }
+
+    if (answers.length !== 20) {
+        console.error("Error: El número de respuestas es incorrecto.");
+        return 0;
     }
+
+    for (let i = 0; i < 20; i++) {
+        const answer = answers[i];
+        const mapping = scoreMapping[i];
+
+        if (!mapping) {
+            console.warn(`No se encontró un mapeo para la pregunta ${i + 1}`);
+            continue;
+        }
+
+        if (mapping[answer] !== undefined) {
+            total += mapping[answer];
+        } else {
+            console.warn(`La respuesta '${answer}' en la pregunta ${i + 1} no tiene coincidencia en scoreMapping.`);
+        }
+    }
+
     return total;
-  }
+}
 
   const score = calculateScore(storedAnswers);
 
