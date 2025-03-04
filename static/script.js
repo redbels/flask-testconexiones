@@ -33,8 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let blockEnd = Math.min(currentQuestionIndex + blockSize, questions.length);
         for (let i = currentQuestionIndex; i < blockEnd; i++) {
             const q = questions[i];
+            // Aquí se corrige: usamos backticks para definir el template literal
             const questionDiv = document.createElement("div");
-            questionDiv.innerHTML = <p><strong>${q.question}</strong></p>;
+            questionDiv.innerHTML = `<p><strong>${q.question}</strong></p>`;
             q.options.forEach(option => {
                 const button = document.createElement("button");
                 button.textContent = option;
@@ -112,6 +113,5 @@ document.addEventListener("DOMContentLoaded", function () {
         { question: "2️⃣0️⃣ 🚪 Si te alejás, ¿cómo reacciona?", options: ["Muestra interés y busca saber qué pasa.", "A veces lo nota, a veces no.", "No se da cuenta o le da lo mismo."]}
     ];
 
-// loadQuestions(); // Se invocará solo al hacer clic en "EMPEZAR"
-
+    loadQuestions();
 });
