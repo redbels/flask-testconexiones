@@ -112,6 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
         { question: "2️⃣0️⃣ 🚪 Si te alejás, ¿cómo reacciona?", options: ["Muestra interés y busca saber qué pasa.", "A veces lo nota, a veces no.", "No se da cuenta o le da lo mismo."]}
     ];
 
-    // Inicialmente cargar las primeras 2 preguntas
-    loadQuestions();
+// loadQuestions(); // Se invocará solo al hacer clic en "EMPEZAR"
+
 });
