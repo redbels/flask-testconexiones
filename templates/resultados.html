@@ -33,11 +33,12 @@
   </div>
 
   <script>
-    function shareResult() {
-      const message = encodeURIComponent("Hace el test y compartamos traumas jaja. Mira este test: " + window.location.href);
-      window.open("https://api.whatsapp.com/send?text=" + message, "_blank");
-    }
-  </script>
+  function shareResult() {
+    const baseURL = "https://flask-testconexionesredbels.onrender.com";
+    const message = encodeURIComponent("Hace el test y compartamos traumas jaja. Mira este test: " + baseURL);
+    window.open("https://api.whatsapp.com/send?text=" + message, "_blank");
+  }
+</script>
 </body>
 </html>
 
