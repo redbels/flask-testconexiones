@@ -1,3 +1,4 @@
+console.log("✅ `script.js` se está ejecutando correctamente.");
 document.addEventListener("DOMContentLoaded", function () {
   console.log("✅ DOM completamente cargado.");
 
