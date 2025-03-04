@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conocé Más - Proyecto RedBels</title>
-  <link rel="stylesheet" href="static/styles.css">
-<script src="static/resultados.js" defer></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="{{ url_for('static', filename='resultados.js') }}" defer></script>
 </head>
 <body>
   <div class="container">
@@ -69,34 +69,41 @@
       </p>
     </div>
     
-    <!-- Bloque con Cafecito al final -->
     <div class="block">
+      <h2>📌 6. ES UNA VERSIÓN BETA, PERO LA VOY A SEGUIR MEJORANDO</h2>
       <p>
-        📩 Mail: rojobelen@gmail.com<br>
-        ☕ Si querés apoyarme: 
-        <a href="https://cafecito.app/redbels" rel="noopener" target="_blank">
-          <img srcset="https://cdn.cafecito.app/imgs/buttons/button_5.png 1x, https://cdn.cafecito.app/imgs/buttons/button_5_2x.png 2x, https://cdn.cafecito.app/imgs/buttons/button_5_3.75x.png 3.75x" src="https://cdn.cafecito.app/imgs/buttons/button_5.png" alt="Invitame un café en cafecito.app" class="cafecito-img"/>
-        </a>
+        Las preguntas fueron estructuradas en base a modelos psicológicos y análisis de datos sobre vínculos en etapa inicial.
+        Cada respuesta tiene un peso, pero el test no solo suma puntos: analiza tendencias.
+        El sistema evalúa si hay coherencia entre tus respuestas y detecta dinámicas de reciprocidad, evasión o interés real.
+        El resultado no es aleatorio ni genérico: se ajusta según la interacción entre todas tus respuestas.
+        Esta prueba no es estática, está viva.
       </p>
       <p>
-        Y ahora sí, dejá de sobreanalizar y volvé a vivir tu vida. 🚀🔥
+        Voy a seguir agregando contenido, mejorando los análisis y ajustando los diagnósticos con cada historia que me llegue.
+      </p>
+      <p>
+        Si te sirvió, si te hizo pensar o si simplemente querés contarme tu historia, escribime.
       </p>
     </div>
     
-    <!-- Enlace INICIO -->
-    <p>
-      <a href="index.html">INICIO</a>
-    </p>
+    <div class="block">
+      <p>
+        📩 Mail: rojobelen@gmail.com<br>
+      </p>
+      <p>
+        🚀 Gracias por estar aquí.<br>
+        Si esta prueba te hizo abrir los ojos, bien.<br>
+        Si no, bueno… por lo menos no perdiste tanto tiempo como en esa relación. 🔥
+      </p>
+    </div>
 
     <!-- Footer con enlaces en el margen inferior izquierdo -->
-  <div id="footer-links">
-    <a href="index.html">INICIO</a>
-    <a href="conocer-mas.html">CONOCER MÁS</a>
+    <div id="footer-links">
+      <a href="index.html">INICIO</a>
+      <a href="conocer-mas.html">CONOCER MÁS</a>
+    </div>
 
-  </div>
-    <p class="signature">
-      Creado por @RedBels
-    </p>
+    <p class="signature">Creado por @RedBels</p>
   </div>
 </body>
 </html>
