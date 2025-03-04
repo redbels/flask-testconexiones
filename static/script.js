@@ -1,21 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("✅ DOM completamente cargado.");
 
-  const startButton = document.getElementById("start-button");
-  const introContainer = document.getElementById("intro-container");
-  const testContainer = document.getElementById("test-container");
+  console.log("✅ DOM completamente cargado.");
 
-  if (startButton) {
-    console.log("✅ Botón encontrado:", startButton);
-    startButton.addEventListener("click", function () {
-      console.log("🟢 Botón clickeado, iniciando el test...");
-      introContainer.style.display = "none";
-      testContainer.style.display = "block";
-      loadQuestions();
-    });
-  } else {
-    console.error("❌ ERROR: El botón 'EMPEZAR' NO fue encontrado en el DOM.");
-  }
+const startButton = document.getElementById("start-button");
+const introContainer = document.getElementById("intro-container");
+const testContainer = document.getElementById("test-container");
+
+if (startButton) {
+  console.log("✅ Botón encontrado:", startButton);
+  startButton.addEventListener("click", function () {
+    console.log("🟢 Botón clickeado, iniciando el test...");
+    introContainer.style.display = "none";
+    testContainer.style.display = "block";
+    loadQuestions();
+  });
+} else {
+  console.error("❌ ERROR: El botón 'EMPEZAR' NO fue encontrado en el DOM.");
+}
 
   console.log("✅ DOM completamente cargado.");
 
