@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
@@ -17,6 +17,11 @@ def como_esta_armado():
 @app.route("/conocer-mas")
 def conocer_mas():
     return render_template("conocer-mas.html")
+
+# 🔹 NUEVO: Servir archivos estáticos explícitamente
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
