@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   console.log("✅ DOM completamente cargado.");
 
-document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ DOM completamente cargado.");
+
+    document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ DOM completamente cargado.");
 
     const startButton = document.getElementById("start-button");
@@ -23,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("❌ ERROR: El botón 'EMPEZAR' NO fue encontrado en el DOM.");
     }
 });
+
 
 
   console.log("✅ DOM completamente cargado.");
