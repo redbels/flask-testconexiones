@@ -1,66 +1,35 @@
 document.addEventListener("DOMContentLoaded", function () {
-  document.addEventListener("DOMContentLoaded", function () {
-   let storedAnswers = localStorage.getItem("respuestasTest");
+  console.log("✅ `resultados.js` se está ejecutando correctamente.");
 
-if (!storedAnswers) {
-    console.error("No hay respuestas almacenadas en localStorage.");
-    return;
-}
-
-storedAnswers = JSON.parse(storedAnswers);
-console.log("Respuestas crudas almacenadas:", storedAnswers);
-
-// Convertir el objeto a un array si es necesario
-storedAnswers = Object.values(storedAnswers);
-console.log("Respuestas convertidas en array:", storedAnswers);
-
-if (storedAnswers.length !== 20) {
-    console.error("Error: Número incorrecto de respuestas.");
-    return;
-}
-    
-    console.log("Respuestas crudas almacenadas:", storedAnswers);
-
-    // Verificar si storedAnswers es un objeto en lugar de un array
-    if (!Array.isArray(storedAnswers)) {
-        storedAnswers = Object.values(storedAnswers);
-        console.log("Respuestas convertidas en array:", storedAnswers);
-    }
-
-    if (!storedAnswers || storedAnswers.length !== 20) {
-        console.error("Error: El número de respuestas es incorrecto.");
-        return;
-    }
-
-    const score = calculateScore(storedAnswers);
-    console.log("Puntaje final:", score);
-
-    const diagnosis = getDiagnosis(score);
-    console.log("Diagnóstico seleccionado:", diagnosis);
-
-    // Mostrar el diagnóstico en la página
+  // 1. Recuperar las respuestas almacenadas en localStorage
+  let storedAnswers = localStorage.getItem("respuestasTest");
+  if (!storedAnswers) {
+    console.error("❌ No se encontraron respuestas almacenadas en localStorage.");
     const resultContainer = document.getElementById("result-container");
     if (resultContainer) {
-        resultContainer.innerHTML = `
-            <h2>${diagnosis.title}</h2>
-            <p><strong>Traducción más directa:</strong> ${diagnosis.translation}</p>
-            <p><strong>Análisis basado en el diagnóstico:</strong> ${diagnosis.analysis}</p>
-            <p><strong>Detectado patrón en tus respuestas:</strong><br>${diagnosis.detected.replace(/\n/g, "<br>")}</p>
-            <p><strong>Qué podés hacer ahora:</strong></p>
-            <ul>${diagnosis.actions.map(action => `<li>${action}</li>`).join("")}</ul>
-            <p><strong>¿Qué significa esto a largo plazo?:</strong> ${diagnosis.future}</p>
-        `;
+      resultContainer.innerHTML = "<p>No se encontraron respuestas. Volvé a hacer el test.</p>";
     }
-});
+    return;
+  }
+  storedAnswers = JSON.parse(storedAnswers);
+  console.log("Respuestas crudas almacenadas:", storedAnswers);
 
-  const resultContainer = document.getElementById("result-container");
-
-  if (!storedAnswers) {
-    resultContainer.innerHTML = "<p>No se encontraron respuestas. Volvé a hacer el test.</p>";
+  // Convertir a array si es necesario
+  if (!Array.isArray(storedAnswers)) {
+    storedAnswers = Object.values(storedAnswers);
+    console.log("Respuestas convertidas en array:", storedAnswers);
+  }
+  
+  if (storedAnswers.length !== 20) {
+    console.error("❌ Error: Se esperaban 20 respuestas, pero se recibieron:", storedAnswers.length);
+    const resultContainer = document.getElementById("result-container");
+    if (resultContainer) {
+      resultContainer.innerHTML = "<p>Error: el número de respuestas es incorrecto. Volvé a hacer el test.</p>";
+    }
     return;
   }
 
-  // Mapeo de puntuación para cada pregunta (índice 0 a 19)
+  // 2. Definir el mapeo de puntuación para cada pregunta (índices 0 a 19)
   const scoreMapping = [
     // Bloque 1: Comunicación y Contacto
     {
@@ -91,7 +60,7 @@ if (storedAnswers.length !== 20) {
       "No, siempre los propongo yo.": 1
     },
     {
-      "Se muestra interesado": 3,
+      "Se muestra interesado.": 3,
       "Responde normal, sin mucho interés.": 2,
       "Evita la conversación o cambia de tema.": 1
     },
@@ -102,7 +71,7 @@ if (storedAnswers.length !== 20) {
     },
     {
       "Sí, claramente.": 3,
-      "No lo tengo claro, a veces sí ya veces no.": 2,
+      "No lo tengo claro, a veces sí a veces no.": 2,
       "No, siempre soy su último plan.": 1
     },
     // Bloque 3: Conexión Emocional
@@ -156,7 +125,7 @@ if (storedAnswers.length !== 20) {
     {
       "No, sigue igual o incluso más interesado/a.": 3,
       "Sí, siento que está más frío/a ahora.": 2,
-      "Sí, al principio era atento/ay ahora apenas responde.": 1
+      "Sí, al principio era atento/a y ahora apenas responde.": 1
     },
     {
       "Me siento seguro/a, hay estabilidad.": 3,
@@ -170,151 +139,143 @@ if (storedAnswers.length !== 20) {
     }
   ];
 
- function calculateScore(answers) {
+  // 3. Función para calcular el puntaje total
+  function calculateScore(answers) {
     let total = 0;
-
     if (answers.length !== 20) {
-        console.error("Error: El número de respuestas es incorrecto.");
-        return 0;
+      console.error("❌ Error: Se esperaban 20 respuestas, pero se recibieron:", answers.length);
+      return 0;
     }
-
     for (let i = 0; i < 20; i++) {
-        const answer = answers[i];
-        const mapping = scoreMapping[i];
-
-        if (!mapping) {
-            console.warn(`No se encontró un mapeo para la pregunta ${i + 1}`);
-            continue;
-        }
-
-        if (mapping[answer] !== undefined) {
-            total += mapping[answer];
-        } else {
-            console.warn(`La respuesta '${answer}' en la pregunta ${i + 1} no tiene coincidencia en scoreMapping.`);
-        }
+      const answer = answers[i];
+      const mapping = scoreMapping[i];
+      if (!mapping) {
+        console.warn(`No se encontró mapeo para la pregunta ${i + 1}`);
+        continue;
+      }
+      if (mapping[answer] !== undefined) {
+        total += mapping[answer];
+      } else {
+        console.warn(`La respuesta '${answer}' en la pregunta ${i + 1} no tiene coincidencia en scoreMapping.`);
+      }
     }
-
     return total;
-}
+  }
 
-  const score = calculateScore(storedAnswers);
-
+  // 4. Función para obtener el diagnóstico basado en el puntaje
+  // Se definen 9 diagnósticos; a mayor puntaje, mejor resultado.
   function getDiagnosis(score) {
     if (score >= 56 && score <= 60) {
       return {
         title: "🟢 1. “Acá hay futuro”",
         translation: "Esto tiene toda la pinta de funcionar. No la cagues.",
-        analysis: "Esta conexión muestra reciprocidad en el interés y la comunicación. No solo responde, sino que busca hablarte, te propone planes y demuestra entusiasmo. Según la Teoría de la Interdependencia , cuando dos personas invierten en la relación de forma equilibrada, la satisfacción m\nAdemás, la Teoría del Espejo sugiere que cuando alguien siente una atracción genuina y conexión emocional, refleja de manera natural su nivel de interés. Acá no hay que analizar demasiado: lo que ves es lo que hay.",
-        detected: "Interés mutuo: No sos el único que toma la iniciativa.\nFluidez en la comunicación: No hay juegos ni silencios estratégicos.\nPresencia activa: La otra persona busca verte, te integra en sus planes y mantiene la conexión.",
+        analysis: "Esta conexión muestra reciprocidad en el interés y la comunicación. No solo responde, sino que busca hablarte, te propone planes y demuestra entusiasmo. Según la Teoría de la Interdependencia, cuando dos personas invierten en la relación de forma equilibrada, la satisfacción se incrementa. Además, la Teoría del Espejo sugiere que una atracción genuina se refleja naturalmente. Acá lo que ves es lo que hay.",
+        detected: "Interés mutuo: No sos el único que toma la iniciativa.\nFluidez en la comunicación: No hay juegos ni silencios estratégicos.\nPresencia activa: La otra persona te integra en sus planes y mantiene la conexión.",
         actions: [
           "Seguí conociéndolo/a sin apresurar las cosas.",
-          "Asegúrese de que este interés se mantenga en el tiempo y no sea solo una racha inicial.",
+          "Asegurate de que este interés se mantenga en el tiempo y no sea solo una racha inicial.",
           "No dejes de lado tu vida por esto, pero disfrutá la conexión."
         ],
-        future: "Si la dinámica sigue igual, es altamente probable que esta relación evolucione bien. La clave será mantener el equilibrio entre el interés mutuo y el respeto por el espacio personal.\nLas relaciones sanas no se sienten como un rompecabezas. Si esto fluye, es porque funciona. 🚀🔥"
+        future: "Si la dinámica sigue igual, es altamente probable que esta relación evolucione bien. La clave será mantener el equilibrio entre el interés mutuo y el respeto por el espacio personal."
       };
     } else if (score >= 51 && score <= 55) {
       return {
         title: "🟡 2. “Va bien, pero con ritmo propio”",
         translation: "Hay química, pero no están al mismo ritmo. Tranquilo, no fuerces nada.",
-        analysis: "Tus respuestas indican que hay un interés real, pero con ciertas diferencias en la frecuencia y la iniciativa. Esto puede deberse a distintos estilos de apego o ritmos personales en la vinculación. Según la Teoría del Ritmo Relacional , cada persona se involucra emocionalmente a su propio tiempo, y cuando las velocidades no coinciden, uno de los dos suele sentir ansiedad o inseguridad.\nPor otro lado, la Teoría de la Expectativa y la Realidad sugiere que el problema no es solo lo que la otra persona hace, sino lo que vos esperas que haga. Si sentiste que a veces te da señales confusas, puede ser porque no está procesando la relación con la misma intensidad que vos.",
-        detected: "Hay interés, pero no hay iniciativa constante.\nNo siempre estás disponible emocionalmente en el mismo nivel que tú.\nFluctuaciones en la comunicación y en el entusiasmo para hacer planes.",
+        analysis: "Tus respuestas indican un interés real, pero hay diferencias en frecuencia e iniciativa. Esto puede deberse a distintos estilos de apego. La Teoría del Ritmo Relacional sugiere que cada persona se involucra a su propio tiempo, y la Teoría de la Expectativa y la Realidad plantea que lo que esperás de la otra persona es fundamental. Las señales confusas pueden indicar que no procesa la relación con la misma intensidad que vos.",
+        detected: "Interés, pero sin iniciativa constante.\nFluctuaciones en la comunicación y en el entusiasmo para hacer planes.",
         actions: [
-          "Observará sin presionar: ¿Es su ritmo natural o solo tibieza?",
-          "Evalúá si te sentiste bien con esta dinámica o si te genera ansiedad.",
-          "Enfócate en vos y en tu vida. Si es una conexión genuina, no necesita ser forzada."
+          "Observá sin presionar: ¿Es su ritmo natural o solo tibieza?",
+          "Evaluá si la dinámica te genera ansiedad.",
+          "Enfocate en vos y en tu vida. Si la conexión es genuina, no necesita forzarse."
         ],
-        future: "Depende de si esta diferencia de ritmos se mantiene o si se encuentra un punto medio. Si con el tiempo la conexión se equilibra, puede fluir bien. Pero si sigues sintiendo que das más de lo que recibes, es probable que esto termine en frustración.\nA veces, no es que no funcione, sino que no funciona ahora . ⏳"
+        future: "Si con el tiempo la conexión se equilibra, puede fluir bien. Pero si das más de lo que recibís, probablemente termine en frustración."
       };
     } else if (score >= 46 && score <= 50) {
       return {
-        title: "🟡 3. \"Ni fu, ni fa. ¿Qué onda con esto?\"",
+        title: "🟡 3. “Ni fu, ni fa. ¿Qué onda con esto?”",
         translation: "No es malo, pero tampoco brilla. Está en un limbo entre el interés y la pereza emocional.",
-        analysis: "La conexión tiene momentos de entusiasmo mezclados con distanciamientos repentinos. Esto puede ser una estrategia inconsciente de refuerzo intermitente , que genera más enganche porque nunca sabés qué esperar. Si te sentiste confundido/a, no es casualidad: es una señal.",
-        detected: "Interés tibio, sin demasiada iniciativa.\nResponde, pero no impulsa la conexión.\nNo hay señales claras de avance ni de cierre.",
+        analysis: "La conexión tiene momentos de entusiasmo y distanciamiento. Esto puede ser una estrategia inconsciente de refuerzo intermitente, que engancha porque nunca sabés qué esperar. Si te sientes confundido, es una señal.",
+        detected: "Interés tibio, sin mucha iniciativa.\nResponde, pero no impulsa la conexión.\nNo hay señales claras de avance ni de cierre.",
         actions: [
-          "Preguntate si realmente esto te suma o si solo te acostumbraste a la incertidumbre.",
-          "Observa si el interés de la otra persona sube cuando te alejas o si sigue igual.",
-          "No pongas energía extra en algo que no te da seguridad ni entusiasmo."
+          "Preguntate si esto realmente te suma o si solo te acostumbraste a la incertidumbre.",
+          "Observá si el interés sube al alejarte o sigue igual.",
+          "No inviertas energía extra en algo que no te brinda seguridad."
         ],
-        future: "Si nada cambia, esta conexión se va a desvanecer por falta de impulso real. Puede durar un tiempo más en este estado de indefinición, pero si no hay un cambio concreto, terminará por agotarte."
+        future: "Si nada cambia, la conexión se desvanecerá por falta de impulso real, y eventualmente terminará agotándote."
       };
     } else if (score >= 41 && score <= 45) {
       return {
-        title: "🟠 4. \"Te dan una de cal y otra de arena (y ya te mareaste)\"",
+        title: "🟠 4. “Te dan una de cal y otra de arena (y ya te mareaste)”",
         translation: "Un día parece que quiere todo, al siguiente desaparece. Y vos te estás volviendo loco/a tratando de entender.",
-        analysis: "Este tipo de dinámica es un clásico del patrón de refuerzo intermitente : te da lo justo para que te ilusiones, pero no lo suficiente para sentirte seguro/a. Es un sube y baja emocional que genera ansiedad y engancha más de lo que parece.\nTambién puede estar relacionado con la Teoría del Apego Ansioso-Evitativo , donde una persona se acerca cuando siente que te está perdiendo, pero cuando te tiene cerca, se aleja de nuevo.",
-        detected: "Momentos de conexión intensos seguidos de frialdad inexplicable.\nInconsistencia en la comunicación y el nivel de interés.\nTe deja con dudas más seguido de lo que te da certezas.",
+        analysis: "Este patrón de refuerzo intermitente te da lo justo para ilusionarte pero no lo suficiente para sentirte seguro. También se relaciona con el Apego Ansioso-Evitativo: se acerca cuando siente que lo estás perdiendo y se aleja cuando estás cerca.",
+        detected: "Conexión intensa seguida de frialdad inexplicable.\nInconsistencia en la comunicación y en el interés.",
         actions: [
-          "No entres en el juego de intentar descifrarlo/a.",
-          "Poné límites: una conexión real no debería hacerte sentir inestable.",
-          "Preguntate si esto te suma o si solo estás enganchado/a por la incertidumbre."
+          "No intentes descifrarlo, poné límites y cuidá tu estabilidad.",
+          "Reflexioná si realmente te suma o solo te engancha por la incertidumbre."
         ],
-        future: "Si nada cambia, esta dinámica puede volverse adictiva y desgastante. La sensación de \"ganar su atención\" cada vez que se aleja puede generarte un falso sentido de logro, pero en el fondo, siempre vas a estar en una posición de inseguridad."
+        future: "Si la dinámica continúa, puede volverse adictiva y desgastante, dejando una sensación de inseguridad constante."
       };
     } else if (score >= 36 && score <= 40) {
       return {
-        title: "🟠 5. \"Es como WiFi de aeropuerto: conexión inestable y sin contraseña\"",
+        title: "🟠 5. “Es como WiFi de aeropuerto: conexión inestable y sin contraseña”",
         translation: "A veces está, a veces no. No sabés si es desinterés o si simplemente vive en otro planeta.",
-        analysis: "Lo que mostraron tus respuestas es una relación con conexión intermitente . No es que haya un rechazo claro, pero tampoco hay suficiente consistencia como para construir algo real.\nEsta situación suele estar asociada a personas con un estilo de apego evitativo , que pueden tener interés, pero manejan el contacto de manera esporádica, sin compromiso emocional.",
-        detected: "La comunicación y el interés van y vienen sin lógica aparente.\nNo hay una clara intención de avanzar o profundizar el vínculo.\nTe deja más dudas que certezas sobre lo que siente.",
+        analysis: "La relación muestra una conexión intermitente, asociada a un estilo de apego evitativo. Hay interés, pero no suficiente consistencia para desarrollar algo real.",
+        detected: "Comunicación y atención inconsistentes.",
         actions: [
-          "Analizar",
-          "No te conformes con migajas de atención disfrazadas de \"fluidez\".",
-          "No le pongas más energía de la que te está devolviendo."
+          "No te conformes con migajas de atención disfrazadas de fluidez.",
+          "No inviertas más energía de la que recibís."
         ],
-        future: "Si esta persona no cambia su forma de conectarse, la historia seguirá igual: a ratos intensos, a ratos fríos. Si quieres algo estable, este tipo de relación te va a desgastar y frustrar."
+        future: "Si la forma de conectar no cambia, la relación probablemente terminará desgastándote emocionalmente."
       };
     } else if (score >= 31 && score <= 35) {
       return {
-        title: "🔵 6. \"Parece amor, pero es un espejismo en el desierto\"",
-        translation: "Te hace sentir especial a ratos, pero cuando te das vuelta, se evapora. Hay algo ahí… pero nunca lo suficiente.",
-        analysis: "Tus respuestas reflejan un patrón de interacción intensa y luego distanciamiento . Esto es muy común en vínculos con dinámicas de refuerzo intermitente , donde te dan dosis de atención y cariño justo cuando estás por rendirte, lo que hace que te quedes esperando más.",
-        detected: "Te ilusiona con gestos fuertes, pero luego se enfría sin motivo.\nCuando lo/la sentís lejos, de golpe vuelve con intensidad.\nTe deja con más preguntas que respuestas sobre lo que realmente siente.",
+        title: "🔵 6. “Parece amor, pero es un espejismo en el desierto”",
+        translation: "Te hace sentir especial a ratos, pero cuando te das vuelta, se evapora. Hay algo ahí, pero nunca lo suficiente.",
+        analysis: "Existe una interacción intensa seguida de distanciamiento, característica de dinámicas de refuerzo intermitente. Esto te mantiene en un estado de espera y confusión.",
+        detected: "Ilusiones intensas seguidas de frialdad.",
         actions: [
-          "Observará los patrones, no solo los momentos lindos.",
-          "No confundas intensidad con conexión real.",
-          "Si una relación te genera más ansiedad que disfrute, algo no está bien."
+          "Reflexioná si esta incertidumbre realmente te beneficia.",
+          "No confundas momentos de intensidad con una conexión profunda."
         ],
-        future: "Si sigues en esta dinámica, es probable que nunca llegues a una estabilidad real. En algún punto, vas a tener que elegir si quieres seguir esperando a alguien que da amor a cuentagotas o si prefieres salir de la montaña rusa emocional."
+        future: "Si esta dinámica continúa, es probable que nunca logres una estabilidad emocional real en la relación."
       };
     } else if (score >= 27 && score <= 30) {
       return {
-        title: "🔵 7. \"Te responde con demora, pero te tiene en la mira\"",
-        translation: "No sos su prioridad, pero tampoco quiere perderte. No está 100% dentro, pero tampoco 100% fuera.",
-        analysis: "Esta persona te mantiene en un \"limbo emocional\" . No te ignora del todo, pero tampoco se muestra completamente comprometida. Sus respuestas son esporádicas, muestra interés a medias y siempre parece haber una excusa para no avanzar demasiado.",
-        detected: "No toma iniciativa real, pero tampoco te deja ir.\nAparece cuando siente que te estás alejando.\nLas conversaciones son irregulares, y a veces sentís que te habla por inercia más que por interés genuino.",
+        title: "🔵 7. “Te responde con demora, pero te tiene en la mira”",
+        translation: "No sos su prioridad, pero tampoco quiere perderte. No está completamente dentro, pero tampoco fuera.",
+        analysis: "Te mantienen en un limbo emocional: te responde esporádicamente, manteniéndote a medias. Este comportamiento indica una falta de compromiso pleno.",
+        detected: "Iniciativa parcial y respuestas esporádicas.",
         actions: [
-          "Deja de invertir más de lo que recibirás. Si solo está cuando vos empujás, ya tenés tu respuesta.",
-          "Probá dar un paso atrás y observar: si realmente le importa, va a aparecer. Si desaparece, es porque nunca estuvo de verdad."
+          "No inviertas más energía de la que recibís.",
+          "Observá si su comportamiento cambia cuando te alejas."
         ],
-        future: "Si sigues en este punto medio, vas a terminar perdiendo tiempo y energía en alguien que nunca se va a definir."
+        future: "Continuar en este punto medio puede llevar a una relación indefinida y frustrante."
       };
     } else if (score >= 23 && score <= 26) {
       return {
-        title: "🔴 8. \"Te quiero, pero no lo suficiente\"",
-        translation: "Te aprecia, pero no te elige. Estás en su vida, pero no en el lugar que te gustaría.",
-        analysis: "Hay interés, sí. Pero no es suficiente como para dar el siguiente paso. Tal vez le gustás, tal vez te tiene cariño, pero si realmente sintiera que sos esa persona especial, no estarías en esta incertidumbre.",
-        detected: "Hay cierta constancia, pero no suficiente como para sentirse seguro/a.\nLa conexión existe, pero siempre parece haber una barrera invisible.\nCuando intentás acercarte más, sentís resistencia o respuestas tibias.",
+        title: "🔴 8. “Te quiero, pero no lo suficiente”",
+        translation: "Te aprecia, pero no te elige. Estás en su vida, pero no en el lugar que deseás.",
+        analysis: "Aunque existe interés, no es el suficiente para dar el siguiente paso. Si realmente te valorara, no tendrías que cuestionarte tu lugar en su vida.",
+        detected: "Interés parcial, barreras invisibles al acercamiento.",
         actions: [
-          "Acepta la realidad tal cual es.",
-          "Deja de sobreinterpretar pequeños gestos.",
-          "Si la otra persona no está segura, vos sí tenés que estarlo."
+          "Aceptá la realidad tal cual es.",
+          "No sobreinterpretes gestos pequeños.",
+          "Si la otra persona no se compromete, hacete cargo de tu seguridad emocional."
         ],
-        future: "Si sigues apostando a esto, vas a estar en un limbo eterno."
+        future: "Persistir en esta dinámica probablemente te mantenga en un limbo eterno."
       };
     } else if (score >= 19 && score <= 22) {
       return {
-        title: "🔴 9. \"Te estás boludeando, salí de ahí\"",
-        translation: "Si fueras más invisible, serías un fantasma. Si alguien te quiere en su vida, no te deja dudando todo el tiempo.",
-        analysis: "Si tenés que preguntarte constantemente si le importas, ya tenés la respuesta: no lo suficiente . Puede ser que disfrute tu atención, que le guste la validación, pero lo que no hay aquí es compromiso real. Esta persona no tiene miedo a perderte porque en el fondo sabe que siempre estás disponible.\nSegún la Teoría del Refuerzo Intermitente , cuanto más inconsistente es alguien con su afecto, más adictivo puede volverse para la otra persona. ¿Por qué? Porque el cerebro recibe una recompensa aleatoria: a veces te da atención, a veces te ignora, y eso te deja en un estado de expectativa constante, buscando el próximo \"premio\".",
-        detected: "Aparece y desaparece sin aviso, sin dar explicaciones.\nCuando lo/la necesitás, no está, pero cuando quieras alejarte, reaparece.\nNo hay consistencia ni intención real de construir algo sólido.",
+        title: "🔴 9. “Te estás boludeando, salí de ahí”",
+        translation: "Si fueras más invisible, serías un fantasma. Si alguien te quiere, no te deja dudando constantemente.",
+        analysis: "Si tenés que cuestionar continuamente si le importás, es señal de falta de compromiso real. La inconsistencia en la atención genera una dependencia emocional insana.",
+        detected: "Atención intermitente y falta de compromiso real.",
         actions: [
-          "Deja de esperar a que cambie, porque no va a pasar.",
-          "No sigas jugando su juego: tomá distancia sin avisar.",
-          "Si te busca cuando te alejás, no es amor, es control."
+          "Dejá de esperar un cambio que no va a llegar.",
+          "Tomá distancia y poné límites claros."
         ],
-        future: "Seguir en esta situación solo te va a desgastar emocionalmente. Este tipo de vínculo no mejora con el tiempo: **o te deja de lastimar porque se transforma en algo real (spoiler: casi nunca pasa), o te deja de lastimar porque aprendes a soltarlo.\nSi quieres claridad, primero tenés que empezar por vos mismo/a: dejar de darle tiempo a quien no lo merece. 🚪🔥"
+        future: "Seguir en esta dinámica probablemente te desgastará emocionalmente y te impedirá crecer."
       };
     } else {
       return {
@@ -323,16 +284,26 @@ if (storedAnswers.length !== 20) {
         analysis: "Los resultados no se pudieron clasificar adecuadamente. Revisa tus respuestas y vuelve a intentarlo.",
         detected: "",
         actions: [
-          "Vuelve a realizar el test.",
-          "Consulta con un profesional para un análisis más detallado."
+          "Volvé a realizar el test.",
+          "Consultá con un profesional para un análisis más detallado."
         ],
         future: "Una revisión externa podría ayudarte a identificar áreas de mejora."
       };
     }
   }
 
+  // 5. Calcular el puntaje y obtener el diagnóstico
+  const score = calculateScore(storedAnswers);
+  console.log("Puntaje final:", score);
   const diagnosis = getDiagnosis(score);
+  console.log("Diagnóstico seleccionado:", diagnosis);
 
+  // 6. Mostrar el diagnóstico en la página
+  const resultContainer = document.getElementById("result-container");
+  if (!resultContainer) {
+    console.error("❌ ERROR: No se encontró el contenedor de resultados.");
+    return;
+  }
   resultContainer.innerHTML = `
     <h2>${diagnosis.title}</h2>
     <p><strong>Traducción más directa:</strong> ${diagnosis.translation}</p>
@@ -343,4 +314,3 @@ if (storedAnswers.length !== 20) {
     <p><strong>¿Qué significa esto a largo plazo?:</strong> ${diagnosis.future}</p>
   `;
 });
-
