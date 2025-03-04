@@ -3,42 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resultados del Test</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <title>Tu Resultado - Test de Conexiones</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Resultados del Test</h1>
+    <h1>¡Acá tenés tu diagnóstico! 🔥</h1>
+    <!-- Contenedor para mostrar los resultados dinámicamente -->
+    <div id="result-container"></div>
 
-    <!-- 📌 Estructura corregida para que `resultados.js` pueda cargar los datos -->
-    <div class="result-container">
-      <h2 id="titulo-resultado"></h2>
-
-      <div class="result-box">
-        <h3>Traducción más directa 💥</h3>
-        <p id="traduccion"></p>
-      </div>
-
-      <div class="result-box">
-        <h3>Análisis de la situación 🔍</h3>
-        <p id="analisis"></p>
-      </div>
-
-      <div class="result-box">
-        <h3>Qué podés hacer ahora ✅</h3>
-        <ul id="acciones"></ul>
-      </div>
-
-      <div class="result-box">
-        <h3>¿Qué significa esto a largo plazo? 🔮</h3>
-        <p id="futuro"></p>
-      </div>
+    <!-- CTA - Compartir y otras opciones -->
+    <div class="cta-buttons">
+      <!-- Botón para compartir vía WhatsApp -->
+      <button id="share" onclick="shareResult()">Compartir 📲</button>
+      <!-- Botón para hablar con un profesional, iniciando con el emoji del cerebro -->
+      <button id="consult" onclick="location.href='psicologos.html'">🧠 Reflexioná más (Habla con un profesional)</button>
     </div>
-
-    <!-- 📌 Botón para reiniciar el test -->
-    <button id="restart-button">🔄 Volver a hacer el test</button>
+    
+    <p class="signature">Creado por @RedBels</p>
+    <p class="signature"><a href="conocer-mas.html">CONOCER MAS</a></p>
   </div>
 
-  <script src="{{ url_for('static', filename='resultados.js') }}"></script>
+  <script src="resultados.js"></script>
+  <script>
+    function shareResult() {
+      const message = encodeURIComponent("Hace el test y compartamos traumas jaja. Mira este test: " + window.location.href);
+      window.open("https://api.whatsapp.com/send?text=" + message, "_blank");
+    }
+  </script>
 </body>
 </html>
