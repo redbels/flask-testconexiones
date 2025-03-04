@@ -113,7 +113,30 @@ document.addEventListener("DOMContentLoaded", function () {
     ]}
   ];
 
-  // 🔹 SE RESTAURA LA FUNCIÓN QUE HACE QUE EL BOTÓN FUNCIONE
+  function loadQuestions() {
+    questionContainer.innerHTML = "";
+    let blockEnd = Math.min(currentQuestionIndex + blockSize, questions.length);
+    for (let i = currentQuestionIndex; i < blockEnd; i++) {
+      const q = questions[i];
+      const questionDiv = document.createElement("div");
+      questionDiv.innerHTML = `<p><strong>${q.question}</strong></p>`;
+      q.options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.classList.add("option-button");
+        button.onclick = () => {
+          answers[i] = option;
+          questionDiv.querySelectorAll(".option-button").forEach(btn => btn.classList.remove("selected"));
+          button.classList.add("selected");
+          nextButton.disabled = false;
+        };
+        questionDiv.appendChild(button);
+      });
+      questionContainer.appendChild(questionDiv);
+    }
+    nextButton.disabled = true;
+  }
+
   startButton.addEventListener("click", function () {
     introContainer.style.display = "none";
     testContainer.style.display = "block";
@@ -121,15 +144,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   nextButton.addEventListener("click", function () {
-    if (!isBlockAnswered()) {
+    if (!answers[currentQuestionIndex] || !answers[currentQuestionIndex + 1]) {
       alert("Debes seleccionar una opción en cada pregunta del bloque antes de continuar.");
       return;
-    }
-
-    for (let i = 0; i < questions.length; i++) {
-      if (!answers[i]) {
-        answers[i] = "No respondida"; 
-      }
     }
 
     currentQuestionIndex += blockSize;
@@ -142,4 +159,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-
