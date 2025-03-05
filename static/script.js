@@ -1,4 +1,4 @@
-criconsole.log("✅ script.js se está ejecutando correctamente.");
+console.log("✅ script.js se está ejecutando correctamente.");
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ DOM completamente cargado.");
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Preguntas organizadas en 5 bloques de 4 preguntas cada uno (del 1 al 20)
     const questions = [
         // BLOQUE 1: Comunicación y Contacto
-        { question: "1️⃣ 📱 ¿Con qué frecuencia te escribe?", options: ["Todos los días con interés.", "Me escribe, día por medio aprox.", "Solo me habla cuando yo escribo primero.", "Aparece y desaparece sin lógica."]},
+        { question: "1️⃣ 📱 ¿Con qué frecuencia te escribe?", options: ["Todos los días con interés.", "Me responde, pero a veces tarda mucho.", "Solo me habla cuando yo escribo primero.", "Aparece y desaparece sin lógica."]},
         { question: "2️⃣ 💬 ¿Inicia conversaciones por su cuenta?", options: ["Sí, le interesa hablar conmigo.", "A veces sí, a veces no.", "No, siempre tengo que escribir primero."]},
         { question: "3️⃣ ⌛ ¿Cuánto tarda en responderte?", options: ["Responde rápido y con interés.", "A veces responde al instante, a veces tarda horas o días.", "Siempre deja los mensajes en visto por horas/días sin motivo."]},
         { question: "4️⃣ 📵 ¿Alguna vez dejó de responder sin explicación y después apareció como si nada?", options: ["Nunca, siempre mantiene el contacto.", "Alguna vez, pero lo hablamos.", "Sí, varias veces, y cuando vuelve actúa como si nada."]},
